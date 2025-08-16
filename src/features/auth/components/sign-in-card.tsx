@@ -14,14 +14,21 @@ import {Button} from "@/components/ui/button";
 import {Separator} from "@/components/ui/separator";
 
 import {SignInFlow} from "@/features/auth/types";
+import {useAuthActions} from "@convex-dev/auth/react";
 
 interface SignInCardProps {
     setState: (state: SignInFlow) => void;
 }
 
 export const SignInCard = ({setState}: SignInCardProps) => {
+    const {signIn} = useAuthActions();
+
     const [email, setEmail] = useState("");
     const [password, setPassWord] = useState("");
+
+    const handleProviderSignIn = (value: "github" | "google") => {
+        signIn(value);
+    };
 
     return (
         <Card className="h-full w-full p-8">
@@ -58,7 +65,7 @@ export const SignInCard = ({setState}: SignInCardProps) => {
                     <div className="flex flex-col gap-y-2.5">
                         <Button
                             disabled={false}
-                            onClick={() => {}}
+                            onClick={() => handleProviderSignIn("google")}
                             variant="outline"
                             size="lg"
                             className="w-full relative"
@@ -68,8 +75,7 @@ export const SignInCard = ({setState}: SignInCardProps) => {
                         </Button>
                         <Button
                             disabled={false}
-                            onClick={() => {
-                            }}
+                            onClick={() => handleProviderSignIn("github")}
                             variant="outline"
                             size="lg"
                             className="w-full relative"
@@ -78,7 +84,11 @@ export const SignInCard = ({setState}: SignInCardProps) => {
                             Continue with GitHub
                         </Button>
                         <p className="text-sm text-muted-foreground">
-                            Don&apos;t have an account?{" "}<span onClick={()=> setState("signUp")} className="text-sky-700 hover:underline cursor-pointer">Sign up</span>
+                            Don&apos;t have an account?{" "}
+                            <span
+                                onClick={() => setState("signUp")}
+                                className="text-sky-700 hover:underline cursor-pointer">Sign up
+                            </span>
                         </p>
                     </div>
                 </form>

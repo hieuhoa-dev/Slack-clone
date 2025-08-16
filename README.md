@@ -40,3 +40,14 @@
 7. **Nếu gặp chưa rõ có thể vào link để xem thêm:**
 - [Hướng dẫn sử dụng Git](https://youtu.be/-VmX40r5ARI)
 ---
+
+8. **Cách chạy dự án:**
+
+   ```bash
+   # Mở Terminal thứ nhất gõ
+   bun run dev
+   # Mở Terminal thứ nhất gõ
+   git pull
+   ```
+> [!IMPORTANT]
+> Phải mở 2 terminal khác nhau
