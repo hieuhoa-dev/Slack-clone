@@ -14,15 +14,21 @@ import {Button} from "@/components/ui/button";
 import {Separator} from "@/components/ui/separator";
 
 import {SignInFlow} from "@/features/auth/types";
+import {useAuthActions} from "@convex-dev/auth/react";
 
 interface SignUpCardProps {
     setState: (state: SignInFlow) => void;
 }
 
 export const SignUpCard = ({setState}: SignUpCardProps) => {
+    const {signIn} = useAuthActions();
     const [email, setEmail] = useState("");
     const [password, setPassWord] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+
+    const handleProviderSignIn = (value: "github" | "google") => {
+        signIn(value);
+    };
 
     return (
         <Card className="h-full w-full p-8">
@@ -67,8 +73,7 @@ export const SignUpCard = ({setState}: SignUpCardProps) => {
                     <div className="flex flex-col gap-y-2.5">
                         <Button
                             disabled={false}
-                            onClick={() => {
-                            }}
+                            onClick={() => handleProviderSignIn("google")}
                             variant="outline"
                             size="lg"
                             className="w-full relative"
@@ -78,8 +83,7 @@ export const SignUpCard = ({setState}: SignUpCardProps) => {
                         </Button>
                         <Button
                             disabled={false}
-                            onClick={() => {
-                            }}
+                            onClick={() => handleProviderSignIn("github")}
                             variant="outline"
                             size="lg"
                             className="w-full relative"
