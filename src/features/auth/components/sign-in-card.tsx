@@ -16,6 +16,7 @@ import {Button} from "@/components/ui/button";
 import {Separator} from "@/components/ui/separator";
 
 import {SignInFlow} from "@/features/auth/types";
+import {useAuthActions} from "@convex-dev/auth/react";
 
 interface SignInCardProps {
     setState: (state: SignInFlow) => void;
@@ -46,6 +47,10 @@ export const SignInCard = ({setState}: SignInCardProps) => {
         setPending(true);
         signIn(value)
             .finally(() => setPending(false));
+    };
+
+    const handleProviderSignIn = (value: "github" | "google") => {
+        signIn(value);
     };
 
     return (
