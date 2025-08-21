@@ -16,7 +16,6 @@ import {Button} from "@/components/ui/button";
 import {Separator} from "@/components/ui/separator";
 
 import {SignInFlow} from "@/features/auth/types";
-import {useAuthActions} from "@convex-dev/auth/react";
 
 interface SignUpCardProps {
     setState: (state: SignInFlow) => void;
@@ -24,6 +23,8 @@ interface SignUpCardProps {
 
 export const SignUpCard = ({setState}: SignUpCardProps) => {
     const {signIn} = useAuthActions();
+
+    const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassWord] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -39,7 +40,7 @@ export const SignUpCard = ({setState}: SignUpCardProps) => {
         }
 
         setPending(true);
-        signIn("password", {email, password, flow: "signUp"})
+        signIn("password", {name, email, password, flow: "signUp"})
             .catch(() => {
                 setError("Something went wrong. Please try again.");
             })
@@ -77,6 +78,14 @@ export const SignUpCard = ({setState}: SignUpCardProps) => {
             )}
             <CardContent className="space-y-5 px-0 pb-0">
                 <form onSubmit={onPasswordSignUp} className="space-y-2.5">
+                    <Input
+                        disabled={pending}
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Full name"
+                        type="text"
+                        required
+                    />
                     <Input
                         disabled={pending}
                         value={email}
