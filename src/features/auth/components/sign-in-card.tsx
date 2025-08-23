@@ -48,10 +48,6 @@ export const SignInCard = ({setState}: SignInCardProps) => {
             .finally(() => setPending(false));
     };
 
-    const handleProviderSignIn = (value: "github" | "google") => {
-        signIn(value);
-    };
-
     return (
         <Card className="h-full w-full p-8">
             <CardHeader className="px-0 pt-0">

@@ -44,10 +44,10 @@
 8. **Cách chạy dự án:**
 
    ```bash
-   # Mở Terminal thứ nhất gõ
+   # Mở Terminal thứ nhất nhập
    bun run dev
-   # Mở Terminal thứ nhất gõ
-   git pull
+   # Mở Terminal thứ hai nhập
+   git convex dev
    ```
 > [!IMPORTANT]
 > Phải mở 2 terminal khác nhau
