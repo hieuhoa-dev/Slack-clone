@@ -8,40 +8,48 @@ import { useCreateChannel } from "@/features/channels/api/use-create-channel";
 import { useWorkspaceId } from "@/hooks/use-workspace-id";
 import { useMemo, useEffect, use } from "react";
 import { Loader, TriangleAlert } from "lucide-react";
+import { useCurrentMember } from "@/features/members/api/use-current-member";
 
 const WorkspaceIdPage =  ( ) => {
     const workspaceId = useWorkspaceId();
     const router = useRouter();
     const [open, setOpen] = useCreateChannelModal();
+    const {data: member, isLoading: memberLoading } = useCurrentMember({workspaceId});
     const {data: workspace, isLoading: workspaceLoading} = useGetWorkspace({id: workspaceId});
-    const {data: channel, isLoading: channelLoading} = useGetChannels({
-        workspaceId,
-        });
+    const {data: channel, isLoading: channelLoading} = useGetChannels({workspaceId,});
 
     const channelId = useMemo(() => channel?.[0]?._id , [channel]);
+    const isAdmin = useMemo(() => member?.role === 'admin', [member?.role]);
+    
     useEffect(() => { 
-        if (  workspaceLoading || channelLoading || !workspace) return;
+        if (  workspaceLoading || channelLoading || !workspace || !member || memberLoading) return;
         if (channelId) {
             router.push(`/workspace/${workspaceId}/channel/${channelId}`);
-        } else if (!open){
+        } else if (!open && isAdmin) {
             setOpen(true);
         }
-    }, [channelId, workspace, workspaceLoading, channelLoading, open, setOpen, router, workspaceId]);
+    }, [channelId, workspace, workspaceLoading, channelLoading, open, setOpen, router, workspaceId, member, memberLoading, isAdmin]);
 
-    if (workspaceLoading || channelLoading) {
+    if (workspaceLoading || channelLoading || memberLoading) {
         return <div className="h-full flex-1 flex items-center justify-center flex-col gap-y-2">
             <Loader className="size-6 animate-spin text-muted-foreground"/>
         </div>;
     }
-    if (!workspace) {
-        return <div className="h-full flex-1 flex items-center justify-center flex-col gap-y-2">
+    if (!workspace || !member) {
+        return (<div className="h-full flex-1 flex items-center justify-center flex-col gap-y-2">
             <TriangleAlert className="size-6 animate-spin text-muted-foreground"/>
             <span className="text-sm text-muted-foreground">
                 Workspace not found or you are not a member
             </span>
-        </div>;
-
+        </div>);
     }
+
+    return (<div className="h-full flex-1 flex items-center justify-center flex-col gap-y-2">
+            <TriangleAlert className="size-6 animate-spin text-muted-foreground"/>
+            <span className="text-sm text-muted-foreground">
+                No channels found, please create a new channel
+            </span>
+        </div>);
     return null;
     // return (
     //     <div>
