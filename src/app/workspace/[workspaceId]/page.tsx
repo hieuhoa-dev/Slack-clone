@@ -1,28 +1,28 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useGetWorkspace } from "@/features/workspaces/api/use-get-workspace";
-import { useCreateChannelModal } from "@/features/channels/store/use-create-channel-modal";
-import { useGetChannels } from "@/features/channels/api/use-get-channels";
-import { useCreateChannel } from "@/features/channels/api/use-create-channel";
-import { useWorkspaceId } from "@/hooks/use-workspace-id";
-import { useMemo, useEffect, use } from "react";
-import { Loader, TriangleAlert } from "lucide-react";
-import { useCurrentMember } from "@/features/members/api/use-current-member";
+import {useRouter} from "next/navigation";
+import {useGetWorkspace} from "@/features/workspaces/api/use-get-workspace";
+import {useCreateChannelModal} from "@/features/channels/store/use-create-channel-modal";
+import {useGetChannels} from "@/features/channels/api/use-get-channels";
+import {useCreateChannel} from "@/features/channels/api/use-create-channel";
+import {useWorkspaceId} from "@/hooks/use-workspace-id";
+import {useMemo, useEffect, use} from "react";
+import {Loader, TriangleAlert} from "lucide-react";
+import {useCurrentMember} from "@/features/members/api/use-current-member";
 
-const WorkspaceIdPage =  ( ) => {
+const WorkspaceIdPage = () => {
     const workspaceId = useWorkspaceId();
     const router = useRouter();
     const [open, setOpen] = useCreateChannelModal();
-    const {data: member, isLoading: memberLoading } = useCurrentMember({workspaceId});
+    const {data: member, isLoading: memberLoading} = useCurrentMember({workspaceId});
     const {data: workspace, isLoading: workspaceLoading} = useGetWorkspace({id: workspaceId});
     const {data: channel, isLoading: channelLoading} = useGetChannels({workspaceId,});
 
-    const channelId = useMemo(() => channel?.[0]?._id , [channel]);
+    const channelId = useMemo(() => channel?.[0]?._id, [channel]);
     const isAdmin = useMemo(() => member?.role === 'admin', [member?.role]);
-    
-    useEffect(() => { 
-        if (  workspaceLoading || channelLoading || !workspace || !member || memberLoading) return;
+
+    useEffect(() => {
+        if (workspaceLoading || channelLoading || !workspace || !member || memberLoading) return;
         if (channelId) {
             router.push(`/workspace/${workspaceId}/channel/${channelId}`);
         } else if (!open && isAdmin) {
@@ -35,27 +35,24 @@ const WorkspaceIdPage =  ( ) => {
             <Loader className="size-6 animate-spin text-muted-foreground"/>
         </div>;
     }
-    if (!workspace || !member) {
+    if (!workspace) {
         return (<div className="h-full flex-1 flex items-center justify-center flex-col gap-y-2">
-            <TriangleAlert className="size-6 animate-spin text-muted-foreground"/>
+            <TriangleAlert className="size-6 text-muted-foreground"/>
             <span className="text-sm text-muted-foreground">
-                Workspace not found or you are not a member
+                Workspace not found
             </span>
         </div>);
     }
 
-    return (<div className="h-full flex-1 flex items-center justify-center flex-col gap-y-2">
-            <TriangleAlert className="size-6 animate-spin text-muted-foreground"/>
+    return (
+        <div className="h-full flex-1 flex items-center justify-center flex-col gap-y-2">
+            <TriangleAlert className="size-6 text-muted-foreground"/>
             <span className="text-sm text-muted-foreground">
                 No channels found, please create a new channel
             </span>
-        </div>);
-    return null;
-    // return (
-    //     <div>
-    //         Data: {JSON.stringify(workspace)}
-    //     </div>
-    // );
+        </div>
+    );
+
 };
 
 export default WorkspaceIdPage;
