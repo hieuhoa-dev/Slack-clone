@@ -11,6 +11,7 @@ import {Button} from "@/components/ui/button";
 import "quill/dist/quill.snow.css";
 
 import {cn} from "@/lib/utils";
+import {EmojiPopover} from "@/components/emoji-popover";
 
 type EditorValue = {
     image: File | null;
@@ -128,6 +129,12 @@ const Editor = ({
         }
     }
 
+    const emojiSelect = (emoji: any) => {
+        const quill = quillRef.current;
+        const cursorPosition = quill?.getSelection()?.index || 0;
+        quill?.insertText(cursorPosition, emoji.native);
+    };
+
     const isEmpty = text.replace(/<(.n)*?>/g, "").trim().length === 0;
 
     return (
@@ -149,15 +156,17 @@ const Editor = ({
                         </Button>
                     </Hint>
                     <Hint label="Emoji">
-                        <Button
-                            disabled={disabled}
-                            size="iconSm"
-                            variant="ghost"
-                            onClick={() => {
-                            }}
+                        <EmojiPopover
+                            onEmojiSelect={emojiSelect}
                         >
-                            <Smile className="size-4"/>
-                        </Button>
+                            <Button
+                                disabled={disabled}
+                                size="iconSm"
+                                variant="ghost"
+                            >
+                                <Smile className="size-4"/>
+                            </Button>
+                        </EmojiPopover>
                     </Hint>
                     {variant === "create" && (
                         <Hint label="Image">
@@ -211,11 +220,16 @@ const Editor = ({
                     )}
                 </div>
             </div>
-            <div className="p-2 text-[10px] text-muted-foreground flex justify-end">
-                <p>
-                    <strong>Shift + Return</strong> to add a new line.
-                </p>
-            </div>
+            {variant === "create" && (
+                <div className={cn(
+                    "p-2 text-[10px] text-muted-foreground flex justify-end opacity-0 transition",
+                    !isEmpty && "opacity-100"
+                )}>
+                    <p>
+                        <strong>Shift + Return</strong> to add a new line.
+                    </p>
+                </div>
+            )}
         </div>
     )
 }
