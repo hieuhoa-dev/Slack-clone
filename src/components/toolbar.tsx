@@ -1,8 +1,8 @@
-import { MessageSquareTextIcon, Pencil, Smile, Trash } from "lucide-react";
-import { Button } from "./ui/button";
-import { Message } from "./message";
+import {MessageSquareTextIcon, Pencil, Smile, Trash} from "lucide-react";
+import {Button} from "./ui/button";
+import {Message} from "./message";
 import {Hint} from "./hint";
-import { EmojiPopover } from "./emoji-popover";
+import {EmojiPopover} from "./emoji-popover";
 
 
 interface ToolbarProps {
@@ -15,63 +15,61 @@ interface ToolbarProps {
     handleReaction: (value: string) => void;
 };
 export const Toolbar = ({
-    isAuthor,
-    isPending,
-    handleEdit,
-    handleThread,
-    handleDelete,
-    hideThreadButton,
-    handleReaction
-}: ToolbarProps) => {
+                            isAuthor,
+                            isPending,
+                            handleEdit,
+                            handleThread,
+                            handleDelete,
+                            hideThreadButton,
+                            handleReaction
+                        }: ToolbarProps) => {
     return (
         <div className="absolute top-0 right-5">
             <div className="group-hover:opacity-100 opacity-0 transition-opacity border bg-white rounded-md shadow-md ">
-                <EmojiPopover  
-                hint = "Add reaction"
-                onEmojiSelect = {(emoji) => handleReaction(emoji.native)}> 
-            <Button
-            variant={"ghost"}
-            size="iconSm"
-            disabled={isPending}>
-                <Smile  className="size-4 "/>
-            </Button>
+                <EmojiPopover
+                    hint="Add reaction"
+                    onEmojiSelect={(emoji) => handleReaction(emoji.native)}>
+                    <Button
+                        variant={"ghost"}
+                        size="iconSm"
+                        disabled={isPending}>
+                        <Smile className="size-4 "/>
+                    </Button>
                 </EmojiPopover>
-                {!hideThreadButton &&(
-                    <Hint label ="Reply in thread">
+                {!hideThreadButton && (
+                    <Hint label="Reply in thread">
                         <Button
                             variant={"ghost"}
                             size="iconSm"
-                            disabled={isPending}>
-                            <MessageSquareTextIcon  className="size-4 "/>
+                            disabled={isPending}
+                            onClick={handleThread}
+                        >
+                            <MessageSquareTextIcon className="size-4 "/>
                         </Button>
                     </Hint>
                 )}
-            {/* <Hint label ="Reply in thread">
-            <Button
-            variant={"ghost"}
-            size="iconSm"
-            disabled={isPending}>
-                <MessageSquareTextIcon  className="size-4 "/>
-            </Button>
-            </Hint> */}
-            {isAuthor && (
-            <Hint label ="Edit message">
-            <Button
-            variant={"ghost"}
-            size="iconSm"
-            disabled={isPending}>
-                <Pencil  className="size-4 "/>
-            </Button>
-            </Hint> )}
                 {isAuthor && (
-            <Hint label ="Delete message">
-            <Button
-            variant={"ghost"}
-            size="iconSm"
-            disabled={isPending}>
-                <Trash  className="size-4 "/>
-            </Button>
-                </Hint>
+                    <Hint label="Edit message">
+                        <Button
+                            variant={"ghost"}
+                            size="iconSm"
+                            disabled={isPending}
+                            onClick={handleEdit}
+                        >
+                            <Pencil className="size-4 "/>
+                        </Button>
+                    </Hint>)}
+                {isAuthor && (
+                    <Hint label="Delete message">
+                        <Button
+                            variant={"ghost"}
+                            size="iconSm"
+                            disabled={isPending}
+                            onClick={handleDelete}
+                        >
+                            <Trash className="size-4 "/>
+                        </Button>
+                    </Hint>
                 )}
 
             </div>
