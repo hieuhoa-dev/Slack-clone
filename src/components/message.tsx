@@ -6,6 +6,7 @@ import {Doc, Id} from "../../convex/_generated/dataModel";
 import {Hint} from "@/components/hint";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import {Thumbnail} from "@/components/thumbnail";
+import { Toolbar } from "./toolbar";
 
 const Renderer = dynamic(() => import("@/components/renderer"), {ssr: false});
 
@@ -114,6 +115,19 @@ export const Message = ({
                     ) : null}
                 </div>
             </div>
+            {!isEditing && (
+                <Toolbar 
+                isAuthor={isAuthor}
+                isPending={false}
+                handleEdit={() => setIsEditing(id)}
+                handleThread={() => {} }
+                handleDelete={() => {}}
+                hideThreadButton={hideThreadButton}
+                handleReaction={(value: string) => {}}
+                />
+            )
+
+            }
         </div>
     )
 }
