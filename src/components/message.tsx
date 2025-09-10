@@ -125,9 +125,7 @@ export const Message = ({
                 hideThreadButton={hideThreadButton}
                 handleReaction={(value: string) => {}}
                 />
-            )
-
-            }
+            )}
         </div>
     )
 }
