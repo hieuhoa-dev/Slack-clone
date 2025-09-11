@@ -3,13 +3,14 @@ import {differenceInMinutes, format, isToday, isYesterday} from "date-fns";
 import {GetMessagesReturnType} from "@/features/messages/api/use-get-messages";
 
 import {Message} from "@/components/message";
-import { ChannelHero } from "./channel-hero";
-import { use, useState } from "react";
-import { Id } from "../../convex/_generated/dataModel";
-import { useWorkspaceId } from "@/hooks/use-workspace-id";
-import { useCurrentMember } from "@/features/members/api/use-current-member";
+import {ChannelHero} from "./channel-hero";
+import {use, useState} from "react";
+import {Id} from "../../convex/_generated/dataModel";
+import {useWorkspaceId} from "@/hooks/use-workspace-id";
+import {useCurrentMember} from "@/features/members/api/use-current-member";
+import {Loader} from "lucide-react";
 
-const TIME_THRESHOLD = 5;
+const TIME_THRESHOLD = 2;
 
 interface MessageListProps {
     memberName?: string,
@@ -44,9 +45,9 @@ export const MessageList = ({
                                 isLoadingMore,
                                 canLoadMore,
                             }: MessageListProps) => {
-    const [editingId,setEditingId] = useState<Id<"messages"> | null >(null);
+    const [editingId, setEditingId] = useState<Id<"messages"> | null>(null);
     const workspaceId = useWorkspaceId();
-    const {data : currentMember} = useCurrentMember({workspaceId});
+    const {data: currentMember} = useCurrentMember({workspaceId});
     const groupMessages = data?.reduce(
         (group, message) => {
             const date = new Date(message._creationTime);
@@ -95,7 +96,7 @@ export const MessageList = ({
                                 updatedAt={message.updatedAt}
                                 createdAt={message._creationTime}
                                 isEditing={editingId === message._id}
-                                setIsEditing={setEditingId }
+                                setIsEditing={setEditingId}
                                 isCompact={isCompact}
                                 hideThreadButton={variant === "Thread"}
                                 threadCount={message.threadCount}
@@ -107,9 +108,32 @@ export const MessageList = ({
                     })}
                 </div>
             ))}
-
+            <div className="h-1"
+                 ref={(el) => {
+                     if (el) {
+                         const observer = new IntersectionObserver(([entry]) => {
+                                 if (entry.isIntersecting && canLoadMore) {
+                                     loadMore();
+                                 }
+                             }
+                             , {threshold: 1.0}
+                         );
+                         observer.observe(el);
+                            return () => observer.disconnect();
+                     }
+                 }}
+            />
+            {isLoadingMore && (
+                <div className="text-center my-2 relative">
+                    <hr className="absolute top-1/2 left-0 right-0 border-t border-gray-300"/>
+                    <span className="relative inline-block bg-white px-4 p-1 rounded-full text-xs
+                        border border-gray-300  shadow-sm">
+                           <Loader className="size-4"/>
+                        </span>
+                </div>
+            )}
             {variant === "channel" && channelCreationTime && channelName && (
-                <ChannelHero 
+                <ChannelHero
                     name={channelName}
                     creationTime={channelCreationTime}
                 />

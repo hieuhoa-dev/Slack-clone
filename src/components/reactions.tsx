@@ -37,7 +37,6 @@ export const Reactions = ({
                     key={reaction.value}
                     label={`${reaction.count} ${reaction.count === 1 ? "person has" : "people have"} reacted with ${reaction.value}`}>
                     <button
-                        key={reaction.value}
                         onClick={() => onChange(reaction.value)}
                         className={cn(
                             "h-6 px-2 rounded-full bg-slate-200/70 border border-transparent text-slate-800 flex items-center justify-center gap-x-1",
