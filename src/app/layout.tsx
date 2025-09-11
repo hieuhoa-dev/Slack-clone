@@ -6,6 +6,7 @@ import {ConvexAuthNextjsServerProvider} from "@convex-dev/auth/nextjs/server";
 
 import {Modals} from "@/components/modals";
 import {Toaster} from "@/components/ui/sonner";
+import {NuqsAdapter} from "nuqs/adapters/next";
 
 import "./globals.css";
 
@@ -31,17 +32,19 @@ export default function RootLayout({
 }>) {
     return (
         <ConvexAuthNextjsServerProvider>
-            <html lang="en">
-            <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-            >
-            <ConvexClientProvider>
-                <Toaster/>
-                <Modals/>
-                {children}
-            </ConvexClientProvider>
-            </body>
-            </html>
+            <NuqsAdapter>
+                <html lang="en">
+                <body
+                    className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+                >
+                <ConvexClientProvider>
+                    <Toaster/>
+                    <Modals/>
+                    {children}
+                </ConvexClientProvider>
+                </body>
+                </html>
+            </NuqsAdapter>
         </ConvexAuthNextjsServerProvider>
     );
 }

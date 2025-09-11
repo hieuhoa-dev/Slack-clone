@@ -10,7 +10,7 @@ import {useWorkspaceId} from "@/hooks/use-workspace-id";
 import {useCurrentMember} from "@/features/members/api/use-current-member";
 import {Loader} from "lucide-react";
 
-const TIME_THRESHOLD = 2;
+const TIME_THRESHOLD = 20;
 
 interface MessageListProps {
     memberName?: string,
