@@ -6,7 +6,7 @@ import {useCreateChannelModal} from "@/features/channels/store/use-create-channe
 import {useGetChannels} from "@/features/channels/api/use-get-channels";
 import {useCreateChannel} from "@/features/channels/api/use-create-channel";
 import {useWorkspaceId} from "@/hooks/use-workspace-id";
-import {useMemo, useEffect, use} from "react";
+import {useMemo, useEffect} from "react";
 import {Loader, TriangleAlert} from "lucide-react";
 import {useCurrentMember} from "@/features/members/api/use-current-member";
 
@@ -14,23 +14,29 @@ const WorkspaceIdPage = () => {
     const workspaceId = useWorkspaceId();
     const router = useRouter();
     const [open, setOpen] = useCreateChannelModal();
-    const {data: member, isLoading: memberLoading} = useCurrentMember({workspaceId});
     const {data: workspace, isLoading: workspaceLoading} = useGetWorkspace({id: workspaceId});
-    const {data: channel, isLoading: channelLoading} = useGetChannels({workspaceId,});
+    const {data: member, isLoading: memberLoading} = useCurrentMember({workspaceId});
 
-    const channelId = useMemo(() => channel?.[0]?._id, [channel]);
+    const {data: channels, isLoading: channelsLoading} = useGetChannels({workspaceId});
+
+
     const isAdmin = useMemo(() => member?.role === 'admin', [member?.role]);
+    const channelId = useMemo(() => channels?.[0]?._id, [channels]);
 
     useEffect(() => {
-        if (workspaceLoading || channelLoading || !workspace || !member || memberLoading) return;
+        if (workspaceLoading || channelsLoading || !workspace || !member || memberLoading) return;
+
         if (channelId) {
             router.push(`/workspace/${workspaceId}/channel/${channelId}`);
         } else if (!open && isAdmin) {
             setOpen(true);
         }
-    }, [channelId, workspace, workspaceLoading, channelLoading, open, setOpen, router, workspaceId, member, memberLoading, isAdmin]);
+    }, [
+        channelId, workspace,
+        workspaceLoading, channelsLoading,
+        open, setOpen, router, workspaceId, member, memberLoading, isAdmin]);
 
-    if (workspaceLoading || channelLoading || memberLoading) {
+    if (workspaceLoading || channelsLoading || memberLoading) {
         return <div className="h-full flex-1 flex items-center justify-center flex-col gap-y-2">
             <Loader className="size-6 animate-spin text-muted-foreground"/>
         </div>;

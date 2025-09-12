@@ -142,7 +142,7 @@ export const get = query({
         const userId = await auth.getUserId(ctx);
 
         if (!userId)
-            throw new Error("Unauthorized");
+            return [];
 
         const member = await ctx.db
             .query("members")
@@ -150,8 +150,8 @@ export const get = query({
                 q.eq("workspaceId", args.workspaceId).eq("userId", userId))
             .unique();
 
-        if (!member || member.role !=="admin") {
-            throw new Error("Unauthorized");
+        if (!member) {
+            return [];
         }
 
         const channels = await ctx.db
