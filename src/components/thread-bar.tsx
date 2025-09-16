@@ -30,7 +30,7 @@ export const ThreadBar = ({
                                 {avatarFallback}
                             </AvatarFallback>
                         </Avatar>
-                        <span className="text-xs text-sky-700  hover::underline font-bold truncate ">
+                        <span className="text-xs text-sky-700  hover:underline font-bold truncate ">
                             {count} {count > 1 ? "replies" : "reply"}
                         </span>
                         <span className="text-xs text-muted-foreground truncate group-hover/thread-bar:hidden block">
