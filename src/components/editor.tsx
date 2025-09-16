@@ -139,10 +139,10 @@ const Editor = ({
         }
     }
 
-    const emojiSelect = (emoji: any) => {
+    const emojiSelect = (emojiValue: string) => {
         const quill = quillRef.current;
         const cursorPosition = quill?.getSelection()?.index || 0;
-        quill?.insertText(cursorPosition, emoji.native);
+        quill?.insertText(cursorPosition, emojiValue);
     };
 
     const isEmpty = !image && text.replace(/<(.n)*?>/g, "").trim().length === 0;
