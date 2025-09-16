@@ -28,7 +28,7 @@ export const Toolbar = ({
             <div className="group-hover:opacity-100 opacity-0 transition-opacity border bg-white rounded-md shadow-md ">
                 <EmojiPopover
                     hint="Add reaction"
-                    onEmojiSelect={(emoji) => handleReaction(emoji.native)}>
+                    onEmojiSelect={(emoji) => handleReaction(emoji)}>
                     <Button
                         variant={"ghost"}
                         size="iconSm"
