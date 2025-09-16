@@ -8,17 +8,18 @@ import {Thread} from "@/features/messages/components/thread";
 import {usePanel} from "@/hooks/use-panel";
 import {Loader} from "lucide-react";
 import {Id} from "../../../../convex/_generated/dataModel";
+import { Profile } from "@/features/members/components/profile";
 
 interface WorkspaceIdLayoutProps {
     children: React.ReactNode;
 }
 
 const WorkspaceIdLayout = ({
-                               children
-                           }: WorkspaceIdLayoutProps) => {
-    const {parentMessageId, onClose} = usePanel();
+                    children
+        }: WorkspaceIdLayoutProps) => {
+    const {parentMessageId, profileMemberId, onClose} = usePanel();
 
-    const showPanel = !!parentMessageId;
+    const showPanel = !!parentMessageId || !!profileMemberId;
 
     return (
         <div className="h-full">
@@ -48,7 +49,13 @@ const WorkspaceIdLayout = ({
                                         messageId={parentMessageId as Id<"messages">}
                                         onClose={onClose}
                                     />
-                                ) : (
+                                ) : profileMemberId ? (
+                                    <Profile
+                                        memberId={profileMemberId as Id<"members">}
+                                        onClose={onClose}
+                                    />
+
+                                ) :(
                                     <div className="flex items-center justify-between h-full">
                                         <Loader className="size-5 animate-spin text-muted-foreground"/>
                                     </div>
