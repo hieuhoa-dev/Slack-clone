@@ -23,7 +23,7 @@ type CreateMessageValues = {
     image: Id<"_storage"> | undefined;
 }
 
-export const ChatInput = ({placeholder,conversationId}: ChatInputProps) => {
+export const ChatInput = ({placeholder, conversationId}: ChatInputProps) => {
     const [editorKey, setEditorKey] = useState(0);
     const [isPending, setIsPending] = useState(false);
 
@@ -52,7 +52,7 @@ export const ChatInput = ({placeholder,conversationId}: ChatInputProps) => {
             };
 
             if (image) {
-                const url = await generateUploadUrl({}, {throwError: true});
+                const url = await generateUploadUrl({throwError: true});
 
                 if (!url) {
                     throw new Error("Url not found");

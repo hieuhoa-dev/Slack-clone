@@ -7,7 +7,6 @@ import {Loader} from "lucide-react";
 import {Header} from "@/app/workspace/[workspaceId]/member/[memberId]/header";
 import {ChatInput} from "@/app/workspace/[workspaceId]/member/[memberId]/chat-input";
 import {MessageList} from "@/components/message-list";
-import data from "@emoji-mart/data";
 import { usePanel } from "@/hooks/use-panel";
 
 interface ConversationProps {

@@ -4,7 +4,6 @@ import {useRouter} from "next/navigation";
 import {useGetWorkspace} from "@/features/workspaces/api/use-get-workspace";
 import {useCreateChannelModal} from "@/features/channels/store/use-create-channel-modal";
 import {useGetChannels} from "@/features/channels/api/use-get-channels";
-import {useCreateChannel} from "@/features/channels/api/use-create-channel";
 import {useWorkspaceId} from "@/hooks/use-workspace-id";
 import {useMemo, useEffect} from "react";
 import {Loader, TriangleAlert} from "lucide-react";

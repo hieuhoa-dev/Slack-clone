@@ -23,7 +23,7 @@ export const CreateChannelModal = () => {
     const [open, setOpen] = useCreateChannelModal();
     const [name, setName] = useState("");
 
-    const {mutate, isPending, isSuccess, isError, isSettled} = useCreateChannel();
+    const {mutate, isPending} = useCreateChannel();
 
     const handleClose = () => {
         setOpen(false);

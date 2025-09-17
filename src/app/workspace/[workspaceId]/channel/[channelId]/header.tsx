@@ -61,7 +61,7 @@ export const Header = ({ title }: HeaderProps) => {
         const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault();
             updateChannel({ id: channelId, name: values }, {
-                onSuccess: (data) => {
+                onSuccess: () => {
                     toast.success("Channel updated");
                     setEditOpen(false);
                 },

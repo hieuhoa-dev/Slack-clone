@@ -1,5 +1,3 @@
-import data from "@emoji-mart/data";
-import Picker from "@emoji-mart/react";
 import EmojiPicker, { type EmojiClickData } from "emoji-picker-react";
 
 import {

@@ -1,14 +1,14 @@
-import { formatDistance, formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow } from "date-fns";
 import { Avatar, AvatarImage,AvatarFallback } from "./ui/avatar";
 import { ChevronRight } from "lucide-react";
 
-interface ThreadBarProps { 
+interface ThreadBarProps {
     count?: number;
     image?: string;
     timestamp?: number;
     name?: string;
     onClick?: () => void;
-}; 
+};
 export const ThreadBar = ({
     count,
     image,
@@ -19,8 +19,8 @@ export const ThreadBar = ({
     const avatarFallback = name.charAt(0).toUpperCase();
     if (!count || !timestamp) return null;
     return (
-        <button 
-            onClick={onClick} 
+        <button
+            onClick={onClick}
             className="p-1 rounded-md hover:bg-white border border-transparent hover:border-border flex items-center justify-start group/thread-bar transition max-w-[600px]"
         >
             <div className="flex items-center gap-2 overflow-hidden">

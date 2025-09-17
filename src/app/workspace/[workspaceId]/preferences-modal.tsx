@@ -6,7 +6,7 @@ import {useRouter} from "next/navigation";
 import {
     Dialog, DialogClose,
     DialogContent,
-    DialogDescription, DialogFooter,
+    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
