@@ -36,10 +36,13 @@ const WorkspaceIdPage = () => {
         open, setOpen, router, workspaceId, member, memberLoading, isAdmin]);
 
     if (workspaceLoading || channelsLoading || memberLoading) {
-        return <div className="h-full flex-1 flex items-center justify-center flex-col gap-y-2">
-            <Loader className="size-6 animate-spin text-muted-foreground"/>
-        </div>;
+        return (
+            <div className="h-full flex-1 flex items-center justify-center flex-col gap-y-2">
+                <Loader className="size-6 animate-spin text-muted-foreground"/>
+            </div>
+        );
     }
+
     if (!workspace) {
         return (<div className="h-full flex-1 flex items-center justify-center flex-col gap-y-2">
             <TriangleAlert className="size-6 text-muted-foreground"/>
@@ -49,14 +52,18 @@ const WorkspaceIdPage = () => {
         </div>);
     }
 
-    return (
-        <div className="h-full flex-1 flex items-center justify-center flex-col gap-y-2">
-            <TriangleAlert className="size-6 text-muted-foreground"/>
-            <span className="text-sm text-muted-foreground">
+    if (!channels) {
+        return (
+            <div className="h-full flex-1 flex items-center justify-center flex-col gap-y-2">
+                <TriangleAlert className="size-6 text-muted-foreground"/>
+                <span className="text-sm text-muted-foreground">
                 No channels found, please create a new channel
             </span>
-        </div>
-    );
+            </div>
+        );
+    }
+
+    return null;
 
 };
 
