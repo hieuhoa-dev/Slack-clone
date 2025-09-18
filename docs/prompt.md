@@ -1,0 +1,9 @@
+- Quản lý workspace: tạo, tham gia bằng mã mời, phân quyền admin/member
+- Hệ thống kênh: tạo, quản lý kênh thảo luận theo chủ đề
+- Nhắn tin trực tiếp: trao đổi 1-1 giữa các thành viên
+- Tin nhắn giàu nội dung: hỗ trợ định dạng, emoji, đính kèm hình ảnh
+- Threads: thảo luận theo luồng để tránh loãng nội dung
+- Reactions: phản ứng bằng emoji, cập nhật real-time
+- Frontend: Next.js 15, React 19, TypeScript, Tailwind CSS, Shadcn
+- Backend: Convex (real-time serverless), Convex Auth, file storage
+- Công cụ bổ trợ: Quill.js (rich text editor), Jotai (state), React Query (data fetching), Sonner (toast)
