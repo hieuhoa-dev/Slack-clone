@@ -7,6 +7,10 @@ import {useChannelId} from "@/hooks/use-channel-id";
 import {useWorkspaceId} from "@/hooks/use-workspace-id";
 import {useCreateMessage} from "@/features/messages/api/use-create-message";
 import {useGenerateUploadUrl} from "@/features/upload/api/use-generate-upload-url";
+import {useGetTypingStatuses} from "@/features/typing-statuses/api/use-get-typing-statuses";
+import {useTypingIndicator} from "@/hooks/use-typing-indicator";
+import {useCurrentMember} from "@/features/members/api/use-current-member";
+import {TypingIndicator} from "@/components/typing-indicator";
 
 import {Id} from "../../../../../../convex/_generated/dataModel";
 
@@ -31,6 +35,20 @@ export const ChatInput = ({placeholder}: ChatInputProps) => {
 
     const channelId = useChannelId();
     const workspaceId = useWorkspaceId();
+
+    const {data: currentMember} = useCurrentMember({workspaceId});
+    const {data: typingUsers} = useGetTypingStatuses({
+        workspaceId,
+        channelId,
+    });
+
+    // Chỉ khởi tạo typing indicator khi có currentMember
+    const memberId = currentMember?._id;
+    const {notifyTyping} = useTypingIndicator({
+        workspaceId,
+        memberId: memberId!,
+        channelId,
+    });
 
     const {mutate: createMessage} = useCreateMessage();
     const {mutate: generateUploadUrl} = useGenerateUploadUrl();
@@ -86,8 +104,16 @@ export const ChatInput = ({placeholder}: ChatInputProps) => {
         }
     };
 
+    // Handler để gọi notifyTyping, chỉ gọi khi có memberId
+    const handleTyping = () => {
+        if (memberId) {
+            notifyTyping();
+        }
+    };
+
     return (
         <div className="px-5 w-full">
+            <TypingIndicator typingUsers={typingUsers || []} />
             <Editor
                 key={editorKey}
                 placeholder={placeholder}
@@ -95,6 +121,7 @@ export const ChatInput = ({placeholder}: ChatInputProps) => {
                 onSubmit={handeSubmit}
                 disabled={isPending}
                 innerRef={editorRef}
+                onTyping={handleTyping}
             />
         </div>
     )

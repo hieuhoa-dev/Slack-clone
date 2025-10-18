@@ -1,11 +1,15 @@
 import dynamic from "next/dynamic";
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {toast} from "sonner";
 import Quill from "quill";
 
 import {useWorkspaceId} from "@/hooks/use-workspace-id";
 import {useCreateMessage} from "@/features/messages/api/use-create-message";
 import {useGenerateUploadUrl} from "@/features/upload/api/use-generate-upload-url";
+import {useGetTypingStatuses} from "@/features/typing-statuses/api/use-get-typing-statuses";
+import {useTypingIndicator} from "@/hooks/use-typing-indicator";
+import {useCurrentMember} from "@/features/members/api/use-current-member";
+import {TypingIndicator} from "@/components/typing-indicator";
 
 import {Id} from "../../../../../../convex/_generated/dataModel";
 
@@ -30,6 +34,20 @@ export const ChatInput = ({placeholder, conversationId}: ChatInputProps) => {
     const editorRef = useRef<Quill | null>(null);
 
     const workspaceId = useWorkspaceId();
+
+    const {data: currentMember} = useCurrentMember({workspaceId});
+    const {data: typingUsers} = useGetTypingStatuses({
+        workspaceId,
+        conversationId,
+    });
+
+    // Chỉ khởi tạo typing indicator khi có currentMember
+    const memberId = currentMember?._id;
+    const {notifyTyping} = useTypingIndicator({
+        workspaceId,
+        memberId: memberId!,
+        conversationId,
+    });
 
     const {mutate: createMessage} = useCreateMessage();
     const {mutate: generateUploadUrl} = useGenerateUploadUrl();
@@ -85,8 +103,16 @@ export const ChatInput = ({placeholder, conversationId}: ChatInputProps) => {
         }
     };
 
+    // Handler để gọi notifyTyping, chỉ gọi khi có memberId
+    const handleTyping = () => {
+        if (memberId) {
+            notifyTyping();
+        }
+    };
+
     return (
         <div className="px-5 w-full">
+            <TypingIndicator typingUsers={typingUsers || []}/>
             <Editor
                 key={editorKey}
                 placeholder={placeholder}
@@ -94,6 +120,7 @@ export const ChatInput = ({placeholder, conversationId}: ChatInputProps) => {
                 onSubmit={handeSubmit}
                 disabled={isPending}
                 innerRef={editorRef}
+                onTyping={handleTyping}
             />
         </div>
     )
