@@ -27,6 +27,7 @@ interface Props {
     disabled?: boolean;
     innerRef?: RefObject<Quill | null>;
     variant?: "create" | "update";
+    onTyping?: () => void;
 }
 
 const Editor = ({
@@ -34,7 +35,7 @@ const Editor = ({
                     disabled = false,
                     variant = "create",
                     placeholder = "Write something...",
-                    onSubmit, onCancel, innerRef,
+                    onSubmit, onCancel, innerRef, onTyping,
                 }: Props) => {
     const [text, setText] = useState("");
     const [image, setImage] = useState<File | null>(null);
@@ -112,6 +113,7 @@ const Editor = ({
 
         quill.on(Quill.events.TEXT_CHANGE, () => {
             setText(quill.getText());
+            onTyping?.();
         })
 
         return () => {
@@ -159,7 +161,7 @@ const Editor = ({
             <div
                 className={cn(
                     "flex flex-col border border-slate-200 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-slate-400 focus-within:border-slate-300 focus-within:shadow-sm z-[1] transition bg-white",
-                   disabled && "opacity-50"
+                    disabled && "opacity-50"
                 )}>
                 <div ref={containerRef} className="h-full ql-custom"/>
                 {!!image && (

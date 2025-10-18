@@ -1,0 +1,72 @@
+[33m0571d66[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m add feature is messaging
+[33m277a21c[m add technical document
+[33m0e171a4[m fix loading
+[33m8040b79[m fix deloy
+[33m5662462[m fix deloy
+[33m3465a1e[m Merge pull request #39 from hieuhoa-dev/Cosmetic-improvements
+[33mf22fbd6[m fix param profile-member-id
+[33m72761f1[m[33m ([m[1;31morigin/Cosmetic-improvements[m[33m)[m Cosmetic-improvements
+[33mc1903e7[m Merge pull request #38 from hieuhoa-dev/Search-dialog-component
+[33m29c3361[m Merge pull request #37 from hieuhoa-dev/member-update-remove-feature
+[33mb0bc5e4[m[33m ([m[1;31morigin/member-update-remove-feature[m[33m)[m Member update & remove feature
+[33m49562a7[m Merge pull request #36 from hieuhoa-dev/Member-profile-panel
+[33ma285495[m[33m ([m[1;31morigin/Search-dialog-component[m[33m)[m Search-dialog-component
+[33m608670f[m[33m ([m[1;31morigin/Member-profile-panel[m[33m)[m Member-profile-panel
+[33mc0af0b6[m Merge pull request #35 from hieuhoa-dev/Message-thread-bar
+[33m19eda78[m[33m ([m[1;31morigin/Message-thread-bar[m[33m)[m Message-thread-bar
+[33m5ee9c3a[m Merge pull request #34 from hieuhoa-dev/conversation-feature
+[33m58dfce5[m[33m ([m[1;31morigin/conversation-feature[m[33m)[m Conversation feature
+[33m14c83d7[m Merge pull request #32 from hieuhoa-dev/thread-content
+[33me67d5ac[m[33m ([m[1;31morigin/thread-content[m[33m)[m Thread content
+[33m67feecf[m Merge pull request #31 from hieuhoa-dev/thread-panel
+[33mf9c2902[m[33m ([m[1;31morigin/thread-panel[m[33m)[m Thread panel
+[33m67e0714[m Merge pull request #30 from hieuhoa-dev/infinite-load-feature
+[33m3750add[m[33m ([m[1;31morigin/infinite-load-feature[m[33m)[m Infinite load feature
+[33mfa1aed5[m Merge pull request #29 from hieuhoa-dev/message-reactions-features
+[33m000f5e7[m[33m ([m[1;31morigin/message-reactions-features[m[33m)[m Message reactions feature
+[33m0e0adc6[m Merge pull request #28 from hieuhoa-dev/edit-and-delete-message-features
+[33m7a30d7d[m[33m ([m[1;31morigin/edit-and-delete-message-features[m[33m)[m Edit & delete message features
+[33m46594c1[m Merge pull request #27 from hieuhoa-dev/Message-toolbar
+[33m45bb681[m[33m ([m[1;31morigin/Message-toolbar[m[33m)[m Merge branch 'main' into Message-toolbar
+[33mda2ec96[m Merge pull request #26 from hieuhoa-dev/Channel-hero
+[33m8dd71db[m Message-toolbar
+[33m1b85c5d[m[33m ([m[1;31morigin/Channel-hero[m[33m)[m channel-hero
+[33maebfd5d[m Merge pull request #25 from hieuhoa-dev/message-list
+[33m382eb2f[m[33m ([m[1;31morigin/message-list[m[33m)[m Message List
+[33m6e88a22[m Merge pull request #24 from hieuhoa-dev/messages-get-api
+[33m83fe109[m[33m ([m[1;31morigin/messages-get-api[m[33m)[m Message get API
+[33m5ebe84d[m Merge pull request #23 from hieuhoa-dev/add-schema-conversations-and-reactions
+[33m064a4ce[m[33m ([m[1;31morigin/add-schema-conversations-and-reactions[m[33m)[m Add schema conversations and reactions
+[33m5f8a11e[m hotfix: remapping status
+[33m8d91fa4[m Merge pull request #22 from hieuhoa-dev/image-upload-feature
+[33m5529a24[m[33m ([m[1;31morigin/image-upload-feature[m[33m)[m Image upload feature
+[33mb45fe7a[m Merge pull request #21 from hieuhoa-dev/edit-submit-feature
+[33m6f5491b[m[33m ([m[1;31morigin/edit-submit-feature[m[33m)[m Edit Submit Feature
+[33mcc76cdc[m Merge pull request #20 from hieuhoa-dev/image-picker-feature
+[33m4dd53bc[m[33m ([m[1;31morigin/image-picker-feature[m[33m)[m Image picker feature
+[33m852262d[m Merge pull request #19 from hieuhoa-dev/emoji-picker-component
+[33m1867429[m[33m ([m[1;31morigin/emoji-picker-component[m[33m)[m Emoji picker component
+[33meb62acf[m Merge pull request #18 from hieuhoa-dev/edit-component
+[33m4d043a0[m[33m ([m[1;31morigin/edit-component[m[33m)[m Edit Component
+[33m7eafd1f[m Merge pull request #17 from hieuhoa-dev/Channel-Header
+[33m74566bb[m[33m ([m[1;31morigin/Channel-Header[m[33m)[m Channel-header
+[33mde3f512[m Merge pull request #16 from hieuhoa-dev/Channel-Page
+[33me0842f8[m[33m ([m[1;31morigin/Channel-Page[m[33m)[m Channal-page
+[33mb525c63[m Merge pull request #15 from hieuhoa-dev/workspace-join-page
+[33m2216f69[m[33m ([m[1;31morigin/workspace-join-page[m[33m)[m Workspace join code
+[33m02d9cf3[m Workspace ivite modal (#14)
+[33m2f3124c[m Create channel functionality (#13)
+[33ma92610d[m Channels and Members (#12)
+[33m07eaac6[m Workspace Preferences (#11)
+[33mbc4a0f2[m Merge pull request #10 from hieuhoa-dev/Workspace_Header
+[33mefa71de[m[33m ([m[1;31morigin/Workspace_Header[m[33m)[m Workspace Header
+[33m222bed3[m Workspace members (#9)
+[33mcdf3672[m Sidebar Component (#8)
+[33meea4880[m Toolbar conponent (#7)
+[33mb9d1dbf[m Workspace creation (#6)
+[33m5c44646[m User Button Component (#5)
+[33m68e6b83[m Google password authentication (#4)
+[33ma05e228[m Github authentication (#3)
+[33me0faa36[m Database setup (#2)
+[33m19e408c[m Athentication Ui (#1)
+[33m7a97d76[m Project setup

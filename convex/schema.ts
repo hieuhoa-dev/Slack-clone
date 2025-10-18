@@ -56,6 +56,25 @@ const schema = defineSchema({
             .index("by_workspace_id", ["workspaceId"])
             .index("by_message_id", ["messageId"])
             .index("by_member_id", ["memberId"]),
+        typingStatuses: defineTable({
+            workspaceId: v.id("workspaces"),
+            memberId: v.id("members"),
+            channelId: v.optional(v.id("channels")),
+            conversationId: v.optional(v.id("conversations")),
+            lastSeenAt: v.number(),
+        })
+            .index("by_channel_id", ["channelId"])
+            .index("by_conversation_id", ["conversationId"])
+            .index("by_workspace_id", ["workspaceId"])
+            .index("by_member_id", ["memberId"])
+            .index("by_channel_id_by_member_id", [
+                "channelId",
+                "memberId",
+            ])
+            .index("by_conversation_id_by_member_id", [
+                "conversationId",
+                "memberId",
+            ]),
     })
 ;
 
