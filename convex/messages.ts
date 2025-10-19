@@ -37,7 +37,7 @@ const populateThreads = async (ctx: QueryCtx, messageId: Id<"messages">) => {
 
     return {
         count: messages.length,
-        image: latestMessage.image,
+        image: lastMessageUser?.image,
         timestamp: latestMessage._creationTime,
         name: lastMessageUser?.name,
     }
