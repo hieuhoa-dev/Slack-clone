@@ -4,7 +4,7 @@ import {RefObject, useEffect, useLayoutEffect, useRef, useState} from "react";
 
 import {PiTextAa} from "react-icons/pi";
 import {MdSend} from "react-icons/md";
-import {ImageIcon, Smile, XIcon} from "lucide-react";
+import {ImageIcon, Smile, XIcon, SparklesIcon} from "lucide-react";
 
 import {Hint} from "@/components/hint";
 import {Button} from "@/components/ui/button";
@@ -13,6 +13,8 @@ import {EmojiPopover} from "@/components/emoji-popover";
 import "quill/dist/quill.snow.css";
 
 import {cn} from "@/lib/utils";
+import {useGenerateContent} from "@/features/ai/api/generate-content";
+import {ComposeAssistant} from "@/features/ai/components/ComposeAssistant";
 
 type EditorValue = {
     image: File | null;
@@ -40,6 +42,7 @@ const Editor = ({
     const [text, setText] = useState("");
     const [image, setImage] = useState<File | null>(null);
     const [isToolbarVisible, setIsToolbarVisible] = useState(true);
+    const [generatedContent, setGeneratedContent] = useState<string | null>(null);
 
     const submitRef = useRef(onSubmit);
     const placeholderRef = useRef(placeholder);
@@ -48,6 +51,55 @@ const Editor = ({
     const containerRef = useRef<HTMLDivElement>(null);
     const disabledRef = useRef(disabled);
     const imageElementRef = useRef<HTMLInputElement>(null);
+
+    const {mutate: generateContent, isPending: isGenerating} = useGenerateContent();
+
+    const handleGenerateContent = async () => {
+        const quill = quillRef.current;
+        if (!quill) return;
+
+        const currentText = quill.getText().trim();
+        if (!currentText) {
+            return;
+        }
+
+        // Reset generated content trước khi generate mới
+        setGeneratedContent(null);
+
+        try {
+            const improvedText = await generateContent(
+                {message: currentText},
+                {throwError: true}
+            );
+
+            if (improvedText) {
+                setGeneratedContent(improvedText);
+            }
+        } catch (error) {
+            console.error("Failed to generate content:", error);
+            setGeneratedContent(null);
+        }
+    };
+
+
+    const handleAcceptContent = (content: string) => {
+        const quill = quillRef.current;
+        if (!quill) return;
+
+        quill.setText(content);
+        setText(content);
+        setGeneratedContent(null);
+    };
+
+
+    const handleRejectContent = () => {
+        setGeneratedContent(null);
+    };
+
+
+    const handleRegenerateContent = () => {
+        handleGenerateContent();
+    };
 
     useLayoutEffect(() => {
         submitRef.current = onSubmit;
@@ -214,16 +266,44 @@ const Editor = ({
                         </EmojiPopover>
                     </Hint>
                     {variant === "create" && (
-                        <Hint label="Image">
-                            <Button
-                                disabled={disabled}
-                                size="iconSm"
-                                variant="ghost"
-                                onClick={() => imageElementRef.current?.click()}
-                            >
-                                <ImageIcon className="size-4"/>
-                            </Button>
-                        </Hint>
+                        <>
+                            <Hint label="Image">
+                                <Button
+                                    disabled={disabled}
+                                    size="iconSm"
+                                    variant="ghost"
+                                    onClick={() => imageElementRef.current?.click()}
+                                >
+                                    <ImageIcon className="size-4"/>
+                                </Button>
+                            </Hint>
+                            <Hint label="Improve with AI">
+                                <ComposeAssistant
+                                    generatedContent={generatedContent}
+                                    isGenerating={isGenerating}
+                                    onAccept={handleAcceptContent}
+                                    onReject={handleRejectContent}
+                                    onRegenerate={handleRegenerateContent}
+                                >
+                                    <Button
+                                        disabled={
+                                            text.replace(/<(.n)*?>/g, "").trim().length === 0
+                                            || isGenerating
+                                        }
+                                        size="iconSm"
+                                        variant="ghost"
+                                        onClick={handleGenerateContent}
+                                    >
+                                        <SparklesIcon
+                                            className={cn(
+                                                "size-4 text-muted-foreground transition-all duration-300",
+                                                isGenerating && "rainbow"
+                                            )}
+                                        />
+                                    </Button>
+                                </ComposeAssistant>
+                            </Hint>
+                        </>
                     )}
                     {variant === "update" && (
                         <div className="ml-auto flex items-center gap-x-2">
