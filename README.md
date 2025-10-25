@@ -134,7 +134,14 @@ slack-clone/
 > GOOGLE_GENERATIVE_AI_API_KEY =
 > ```
 
-### 2. Build Process
+### 2. Run project
+
+```bash
+npm install
+npm run dev    
+```
+
+### 3. Build Process
 
 #### Production Build
 
