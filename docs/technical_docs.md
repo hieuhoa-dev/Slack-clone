@@ -10,7 +10,7 @@ Slack Clone là một ứng dụng nhắn tin thời gian thực được xây d
 - **Backend**: Convex (Real-time Database & API)
 - **Authentication**: Convex Auth với GitHub, Google và Password providers
 - **Styling**: Tailwind CSS với Radix UI components
-- **State Management**: Jotai, Zustand (thông qua custom hooks)
+- **State Management**: Jotai (thông qua custom hooks)
 - **Rich Text Editor**: Quill.js
 - **Notifications**: Sonner
 - **Icons**: Lucide React, React Icons
