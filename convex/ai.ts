@@ -5,22 +5,18 @@ import {v} from "convex/values";
 import {google} from "@ai-sdk/google";
 
 /**
- * AI Agent để cải thiện nội dung tin nhắn
- * - Sử dụng Groq với model Qwen3-32B
- * - Chuyên gia về viết lách và giao tiếp
- *
- * Note: Groq API key sẽ tự động lấy từ environment variable GROQ_API_KEY
- * Cần set trong convex dashboard: https://dashboard.convex.dev
+ * AI Agent to improve and create if there is no message content
  */
 const agent = new Agent(components.agent, {
     name: "Writing Assistant",
     languageModel: google('gemini-2.5-flash'),
-    instructions: `"You are an expert rewriting assistant. You are not a chatbot.",
-"Task: Rewrite the provided content to be clearer and better structured while preserving meaning, facts, terminology, and names.",
-"Do not address the user, ask questions, add greetings, or include commentary.",
-"Keep existing links/mentions intact. Do not change code blocks or inline code content.",
-"Output strictly in Markdown (paragraphs and optional bullet lists). Do not output any HTML or images.",
-"Return ONLY the rewritten content. No preamble, headings, or closing.`,
+    instructions: `You are an expert rewriting assistant. You are not a chatbot.,
+Task: Rewrite the provided content to be clearer and better structured while preserving meaning, facts, terminology, and names.
+If there is no content, create content based on existing context.
+Do not address the user, ask questions, add greetings, or include commentary.
+Keep existing links/mentions intact. Do not change code blocks or inline code content.
+Output strictly in Markdown (paragraphs and optional bullet lists). Do not output any HTML or images.
+Return ONLY the rewritten content. No preamble, headings, or closing.`,
     maxSteps: 3,
 
 });
@@ -28,13 +24,12 @@ const agent = new Agent(components.agent, {
 export const generate = action({
     args: {message: v.string()},
     handler: async (ctx, {message}) => {
-        // Tạo thread mới cho mỗi request để tránh context confusion
+        // Create a new thread for each request to avoid context confusion
         const threadId = await createThread(ctx, components.agent);
 
-        // Tạo prompt với context rõ ràng
-        const prompt = `Please rewrite and improve the follow content.\n${message}`;
+        // Init prompt
+        const prompt = `Please rewrite or generate my message.\n${message}`;
 
-        // Gọi AI và trả về kết quả
         const result = await agent.generateText(ctx, {threadId}, {prompt});
 
         return result.text;

@@ -2,12 +2,11 @@ import {api} from "../../../../convex/_generated/api";
 import {useAction} from "convex/react";
 import {useCallback, useMemo, useState} from "react";
 
-type RequestType = { message: string };
+type RequestType = { 
+    message: string;
+    context?: string;
+};
 
-/**
- * Response type từ AI
- * @property text - Nội dung đã được cải thiện
- */
 type ResponseType = string | null;
 
 type Options = {
@@ -17,19 +16,7 @@ type Options = {
     throwError?: boolean;
 };
 
-/**
- * Hook để gọi AI cải thiện nội dung tin nhắn
- * 
- * Usage:
- * ```tsx
- * const { mutate, isPending } = useGenerateContent();
- * 
- * const handleGenerate = async () => {
- *   const result = await mutate({ message: "Your text" });
- *   console.log(result); // Improved text
- * };
- * ```
- */
+
 export const useGenerateContent = () => {
     const [data, setData] = useState<ResponseType>(null);
     const [error, setError] = useState<Error | null>(null);
@@ -48,7 +35,13 @@ export const useGenerateContent = () => {
             setError(null);
             setStatus("pending");
 
-            const response = await action(values);
+            // Xây dựng prompt với context nếu có
+            let fullMessage = values.message;
+            if (values.context) {
+                fullMessage = `Context from conversation:\n${values.context}\n\nMy message:\n${values.message}`;
+            }
+
+            const response = await action({ message: fullMessage });
             setData(response);
             setStatus("success");
             options?.onSuccess?.(response);

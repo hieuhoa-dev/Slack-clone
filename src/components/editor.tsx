@@ -15,6 +15,7 @@ import "quill/dist/quill.snow.css";
 import {cn} from "@/lib/utils";
 import {useGenerateContent} from "@/features/ai/api/generate-content";
 import {ComposeAssistant} from "@/features/ai/components/ComposeAssistant";
+import {toast} from "sonner";
 
 type EditorValue = {
     image: File | null;
@@ -30,6 +31,7 @@ interface Props {
     innerRef?: RefObject<Quill | null>;
     variant?: "create" | "update";
     onTyping?: () => void;
+    historyContext?: string;
 }
 
 const Editor = ({
@@ -38,6 +40,7 @@ const Editor = ({
                     variant = "create",
                     placeholder = "Write something...",
                     onSubmit, onCancel, innerRef, onTyping,
+                    historyContext,
                 }: Props) => {
     const [text, setText] = useState("");
     const [image, setImage] = useState<File | null>(null);
@@ -52,35 +55,35 @@ const Editor = ({
     const disabledRef = useRef(disabled);
     const imageElementRef = useRef<HTMLInputElement>(null);
 
-    const {mutate: generateContent, isPending: isGenerating} = useGenerateContent();
+    const {
+        mutate: mutateGenerateContent,
+        isPending: isGenerating,
+    } = useGenerateContent();
 
-    const handleGenerateContent = async () => {
+    const generateContent = () => {
         const quill = quillRef.current;
         if (!quill) return;
 
         const currentText = quill.getText().trim();
-        if (!currentText) {
-            return;
-        }
 
-        // Reset generated content trước khi generate mới
-        setGeneratedContent(null);
-
-        try {
-            const improvedText = await generateContent(
-                {message: currentText},
-                {throwError: true}
-            );
-
-            if (improvedText) {
-                setGeneratedContent(improvedText);
+        mutateGenerateContent({
+            message: currentText,
+            context: historyContext,
+        }, {
+            onSuccess: (data) => {
+                setGeneratedContent(data);
+            },
+            onError: () => {
+                toast.error("Failed to generate content");
+                setGeneratedContent(null);
             }
-        } catch (error) {
-            console.error("Failed to generate content:", error);
-            setGeneratedContent(null);
-        }
+        });
     };
 
+    const handleGenerateContent = () => {
+        if (generatedContent) return;
+        generateContent();
+    };
 
     const handleAcceptContent = (content: string) => {
         const quill = quillRef.current;
@@ -98,7 +101,7 @@ const Editor = ({
 
 
     const handleRegenerateContent = () => {
-        handleGenerateContent();
+        generateContent();
     };
 
     useLayoutEffect(() => {
@@ -278,30 +281,42 @@ const Editor = ({
                                 </Button>
                             </Hint>
                             <Hint label="Improve with AI">
-                                <ComposeAssistant
-                                    generatedContent={generatedContent}
-                                    isGenerating={isGenerating}
-                                    onAccept={handleAcceptContent}
-                                    onReject={handleRejectContent}
-                                    onRegenerate={handleRegenerateContent}
-                                >
-                                    <Button
-                                        disabled={
-                                            text.replace(/<(.n)*?>/g, "").trim().length === 0
-                                            || isGenerating
-                                        }
-                                        size="iconSm"
-                                        variant="ghost"
-                                        onClick={handleGenerateContent}
+                                <div>
+                                    <ComposeAssistant
+                                        generatedContent={generatedContent}
+                                        isGenerating={isGenerating}
+                                        onAccept={handleAcceptContent}
+                                        onReject={handleRejectContent}
+                                        onRegenerate={handleRegenerateContent}
                                     >
-                                        <SparklesIcon
-                                            className={cn(
-                                                "size-4 text-muted-foreground transition-all duration-300",
-                                                isGenerating && "rainbow"
+                                        <Button
+                                            className={cn("h-8", !isGenerating && "w-8")}
+                                            variant="ghost"
+                                            onClick={handleGenerateContent}
+                                        >
+                                            <SparklesIcon
+                                                className={cn(
+                                                    "size-4 transition-all duration-300",
+                                                    isGenerating && "rainbow"
+                                                )}
+                                            />
+                                            {isGenerating && (
+                                                <>
+                                                <span
+                                                    className="rainbow-text transition-all duration-300">Research</span>
+                                                    <div className="flex gap-1">
+                                                    <span className="animate-bounce font-bold"
+                                                          style={{animationDelay: "0ms"}}>.</span>
+                                                        <span className="animate-bounce font-bold"
+                                                              style={{animationDelay: "150ms"}}>.</span>
+                                                        <span className="animate-bounce font-bold"
+                                                              style={{animationDelay: "300ms"}}>.</span>
+                                                    </div>
+                                                </>
                                             )}
-                                        />
-                                    </Button>
-                                </ComposeAssistant>
+                                        </Button>
+                                    </ComposeAssistant>
+                                </div>
                             </Hint>
                         </>
                     )}
