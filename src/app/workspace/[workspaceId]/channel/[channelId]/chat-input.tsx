@@ -11,6 +11,7 @@ import {useGetTypingStatuses} from "@/features/typing-statuses/api/use-get-typin
 import {useTypingIndicator} from "@/hooks/use-typing-indicator";
 import {useCurrentMember} from "@/features/members/api/use-current-member";
 import {TypingIndicator} from "@/components/typing-indicator";
+import {useHistoryContext} from "@/hooks/use-history-context";
 
 import {Id} from "../../../../../../convex/_generated/dataModel";
 
@@ -42,7 +43,16 @@ export const ChatInput = ({placeholder}: ChatInputProps) => {
         channelId,
     });
 
-    // Chỉ khởi tạo typing indicator khi có currentMember
+    const {mutate: createMessage} = useCreateMessage();
+    const {mutate: generateUploadUrl} = useGenerateUploadUrl();
+
+    // placeholder is Name Channel
+    const {historyContext} = useHistoryContext({
+        channelId,
+        topic: placeholder
+    });
+
+    // Check currentMember
     const memberId = currentMember?._id;
     const {notifyTyping} = useTypingIndicator({
         workspaceId,
@@ -50,8 +60,11 @@ export const ChatInput = ({placeholder}: ChatInputProps) => {
         channelId,
     });
 
-    const {mutate: createMessage} = useCreateMessage();
-    const {mutate: generateUploadUrl} = useGenerateUploadUrl();
+    const handleTyping = () => {
+        if (memberId) {
+            notifyTyping();
+        }
+    };
 
     const handeSubmit = async ({
                                    body, image
@@ -104,12 +117,6 @@ export const ChatInput = ({placeholder}: ChatInputProps) => {
         }
     };
 
-    // Handler để gọi notifyTyping, chỉ gọi khi có memberId
-    const handleTyping = () => {
-        if (memberId) {
-            notifyTyping();
-        }
-    };
 
     return (
         <div className="px-5 w-full">
@@ -122,6 +129,7 @@ export const ChatInput = ({placeholder}: ChatInputProps) => {
                 disabled={isPending}
                 innerRef={editorRef}
                 onTyping={handleTyping}
+                historyContext={historyContext}
             />
         </div>
     )
