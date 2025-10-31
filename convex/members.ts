@@ -156,7 +156,7 @@ export const remove = mutation({
         if (member.role === "admin")
             throw new Error("Admin cannot be removed");
 
-        if (currentMember._id === args.id && currentMember.role !== "admin")
+        if (currentMember._id === args.id && currentMember.role === "admin")
             throw new Error("Cannot remove yourself if self is an admin");
 
         const [messages, reactions, conversations] = await Promise.all([
