@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AgentMigrationStateService">
+    <option name="migrationStatus" value="IN_PROGRESS" />
+    <option name="pendingSessionIds">
+      <option value="02c0169b-4ab8-48ca-86b0-f8d623466ec5" />
+      <option value="18b4bfed-09d6-4e8f-9e19-b42b2d880423" />
+      <option value="43bfa5ea-95f5-4c77-9c71-a4ea5efdf2f0" />
+      <option value="4ff0bbfb-3e61-4f00-a302-7f3f5824704c" />
+      <option value="5bd92fb0-d0cb-487d-b027-ba75cfa75e20" />
+      <option value="64744d70-0b4f-48f6-9218-e258f09772d2" />
+      <option value="71885b7f-3827-4b7a-88a7-715aef4a8692" />
+    </option>
+    <option name="pendingTurns">
+      <map>
+        <entry key="02c0169b-4ab8-48ca-86b0-f8d623466ec5">
+          <value>
+            <set>
+              <option value="ffb14432-919f-4e7a-ba2f-785d782cde70" />
+            </set>
+          </value>
+        </entry>
+        <entry key="4ff0bbfb-3e61-4f00-a302-7f3f5824704c">
+          <value>
+            <set>
+              <option value="70a113dd-a354-4533-b2e0-20696cae809f" />
+            </set>
+          </value>
+        </entry>
+        <entry key="64744d70-0b4f-48f6-9218-e258f09772d2">
+          <value>
+            <set>
+              <option value="326de860-e88c-447d-af7b-32770c0cba0e" />
+              <option value="d29cbee9-1e26-419f-9906-e8c60f736ffc" />
+            </set>
+          </value>
+        </entry>
+        <entry key="71885b7f-3827-4b7a-88a7-715aef4a8692">
+          <value>
+            <set>
+              <option value="c1744ac4-e006-402d-a830-fabbe9a53bfa" />
+              <option value="bba12968-c545-4981-ac46-3db423435046" />
+              <option value="a7b1cfce-51f7-4be1-b847-d9a43ff8cfac" />
+              <option value="04fc2cbf-726f-44a4-ab85-50717e2cfbfe" />
+              <option value="578f2fed-0cdd-4491-82f5-281d7bd90e0a" />
+              <option value="3c7a6e20-e8aa-4e83-b795-d9bc65ecc2d2" />
+              <option value="28560fcd-0c23-4b67-9974-33094d9510e8" />
+              <option value="554fe16d-51fb-4e0e-a24e-9e64e523367c" />
+              <option value="bee3175c-4f1b-491f-8fa4-3c71faa29d18" />
+            </set>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <pendingWorkingSetItems>
+      <entry key="02c0169b-4ab8-48ca-86b0-f8d623466ec5" />
+      <entry key="4ff0bbfb-3e61-4f00-a302-7f3f5824704c" />
+      <entry key="64744d70-0b4f-48f6-9218-e258f09772d2" />
+      <entry key="71885b7f-3827-4b7a-88a7-715aef4a8692">
+        <set>
+          <option value="file://$PROJECT_DIR$/jest.config.ts" />
+          <option value="file://$PROJECT_DIR$/package.json" />
+          <option value="file://$PROJECT_DIR$/src/tests/server/workspaces.test.ts" />
+          <option value="file://$PROJECT_DIR$/src/tests/workspaces.test.ts" />
+          <option value="file://$PROJECT_DIR$/src/tests/reactions.test.ts" />
+          <option value="file://$PROJECT_DIR$/src/features/upload/api/use-generate-upload-url.ts" />
+          <option value="file://$PROJECT_DIR$/src/tests/upload.test.ts" />
+          <option value="file://$PROJECT_DIR$/src/tests/channels.test.ts" />
+          <option value="file://$PROJECT_DIR$/src/tests/conversations.test.ts" />
+          <option value="file://$PROJECT_DIR$/src/tests/members.test.ts" />
+          <option value="file://$PROJECT_DIR$/src/tests/messages.test.ts" />
+        </set>
+      </entry>
+    </pendingWorkingSetItems>
+  </component>
+</project>
