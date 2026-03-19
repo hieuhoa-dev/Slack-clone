@@ -27,6 +27,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci --include=optional
+    - run: npm install lightningcss --force
     - run: npm rebuild
     - run: npm run build --if-present
     - run: npm test
