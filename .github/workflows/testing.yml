@@ -26,6 +26,14 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - name: Restore Next.js build cache
+      uses: actions/cache@v4
+      with:
+        path: ${{ github.workspace }}/.next/cache
+        key: ${{ runner.os }}-nextjs-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('src/**/*.js', 'src/**/*.jsx', 'src/**/*.ts', 'src/**/*.tsx', 'next.config.*') }}
+        restore-keys: |
+            ${{ runner.os }}-nextjs-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}-
+            ${{ runner.os }}-nextjs-${{ matrix.node-version }}-
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
